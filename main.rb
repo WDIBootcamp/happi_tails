@@ -38,24 +38,27 @@ def choices (choice)
 			message += "#{shelter.clients_details}\n"
 
 		when '3'
+			message = 'Adding animal...'
 			print "name: "; name = gets.chomp
 			print "age: "; age = gets.chomp
 			print "gender: "; gender = gets.chomp
 			print "species: "; species = gets.chomp
 			print "toys? If any... : "; toys = gets.chomp.split(", ")
 			shelter.animals << Animal.new( name, age, gender, species, toys)
-			message += "[ + 1 ] Animal #{name} has been added to #{shelter.name} shelter"
+			message = "[ + 1 ] Animal #{name} has been added to #{shelter.name} shelter"
 
 		when '4'
+			message = 'Adding client...'
 			print "name: "; name = gets.chomp
 			print "age: "; age = gets.chomp
 			print "number of kids: "; num_kids = gets.chomp
 			print "number of pets: "; num_pets = gets.chomp
 			new_client = Client.new( name, age, num_kids, num_pets)
 			shelter.clients << new_client
-			message += "[ +1 ] Client #{name} has been added to #{shelter.name} shelter's database"
+			message = "[ +1 ] Client #{name} has been added to #{shelter.name} shelter's database"
 
 		when '5'
+			message = 'Adoptng...'
 			print "We have the following pets up for adoptions:\n"
 			puts shelter.animals_details
 			print "Which one would you like do adopt? > "
@@ -73,8 +76,7 @@ def choices (choice)
 					current_client = shelter.clients.select { |person| 
 						person.name == client_name }.first
 					current_client.pets << clients_pet
-				message += "#{clients_choice} was adopted by #{client_name}!"
-				binding.pry
+				message = "#{clients_choice} was adopted by #{client_name}!"
 
 				when "no"
 					message += 'select [4] to add the client'	
@@ -91,6 +93,7 @@ def choices (choice)
 				end
 
 		when '6'
+			message = 'Putting for adoption...'
 			print "Are you already a client? [yes] [no] >  "
 			is_client = print gets.chomp
 			case is_client
@@ -104,12 +107,12 @@ def choices (choice)
 				selected_pet = selected_client.pets.select { |pet| pet.name == pet_up4_adoption}
 				shelter.animals << selected_pet
 			when "no"
-				message += 'select [4] to add the client'	
+				message = 'select [4] to add the client'	
 				# choices('4') #why doesn't this work!! NOW THE CODE simply starts over
 			end
 
 			else 
-				message += "please select one of the options..."
+				message = "please select one of the options..."
 
 		end
 		choice = menu(message)
