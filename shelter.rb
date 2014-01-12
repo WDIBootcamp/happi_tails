@@ -9,5 +9,14 @@ class Shelter
    @animals = []
 
   end
+
+  def display_clients
+
+  end
+  
+  def display_animals
+
+  end
+
   
 end
