@@ -75,6 +75,8 @@ def choices (choice)
 						person.name == client_name }.first
 					current_client.pets << clients_pet
 				message += "#{clients_choice} was adopted by #{client_name}!"
+				biding.pry
+				
 				when "no"
 					message += 'select [4] to add the client'	
 					choices('4') #why doesn't this work!! NOW THE CODE simply starts over
