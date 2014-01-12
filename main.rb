@@ -32,12 +32,10 @@ def choices (choice)
 
 		when '1'
 			message = "The animals in the shelter are: \n"
-			shelter.animals.each { |pet| 
-				message += "#{pet.name}: #{pet.gender}: #{pet.species}:
-				 #{pet.age} years \n " }
+			message += "#{shelter.animals_details}\n"
 		when '2'
 			message = "The current clients of this shelter are: \n"
-			shelter.clients.each { |client| message += client.name + "\n "  }
+			message += "#{shelter.clients_details}\n"
 
 		when '3'
 			print "name: "; name = gets.chomp
@@ -46,19 +44,20 @@ def choices (choice)
 			print "species: "; species = gets.chomp
 			print "toys? If any... : "; toys = gets.chomp.split(", ")
 			shelter.animals << Animal.new( name, age, gender, species, toys)
-			message += "Animal #{name} has been added to #{shelter.name} shelter"
+			message += "[ + 1 ] Animal #{name} has been added to #{shelter.name} shelter"
 
 		when '4'
 			print "name: "; name = gets.chomp
 			print "age: "; age = gets.chomp
 			print "number of kids: "; num_kids = gets.chomp
 			print "number of pets: "; num_pets = gets.chomp
-			shelter.clients << Client.new( name, age, num_kids, num_pets)
-			message += "Client #{name} has been added to #{shelter.name} shelter's database"
+			new_client = Client.new( name, age, num_kids, num_pets)
+			shelter.clients << new_client
+			message += "[ +1 ] Client #{name} has been added to #{shelter.name} shelter's database"
 
 		when '5'
-			print "We have the following pets up for adoptions: \n "
-			shelter.animals.each { |pet| puts pet.name + "\n" }
+			print "We have the following pets up for adoptions:\n"
+			puts shelter.animals_details
 			print "Which one would you like do adopt? > "
 			clients_choice = gets.chomp
 			clients_pet = shelter.animals.select { |pet| 
@@ -69,17 +68,19 @@ def choices (choice)
 				is_client = gets.chomp
 				case is_client
 				when "yes"
-					print "What's your name? > "
+					print "What's your name? \n > "
 					client_name = gets.chomp 
 					current_client = shelter.clients.select { |person| 
 						person.name == client_name }.first
 					current_client.pets << clients_pet
 				message += "#{clients_choice} was adopted by #{client_name}!"
-				biding.pry
-				
+				binding.pry
+
 				when "no"
 					message += 'select [4] to add the client'	
-					choices('4') #why doesn't this work!! NOW THE CODE simply starts over
+					# choices('4') 
+					#why doesn't this work!! NOW THE CODE simply starts over
+					
 					# redo 
 					# how to run what comes after this method call
 				 #    current_client = shelter.clients.select { |person| 
@@ -91,21 +92,24 @@ def choices (choice)
 
 		when '6'
 			print "Are you already a client? [yes] [no] >  "
-				is_client = print gets.chomp
-				case is_client
-				when "yes"
-					print "What's your name? > "
-					client_name = gets.chomp 
-					current_client = shelter.clients.select { |person| 
-						person.name == client_name }.first
-					current_client.pets << clients_pet
-				when "no"
-					message += 'select [4] to add the client'	
-					choices('4') #why doesn't this work!! NOW THE CODE simply starts over
-				end
+			is_client = print gets.chomp
+			case is_client
+			when "yes"
+				print "What's your name? > "
+				client_name = gets.chomp 
+				print "\nWhat pet do you want to adopt? > "
+				pet_up4_adoption = gets.chomp
+				selected_client = shelter.clients.select { |client| 
+					client.name == client_name }.first
+				selected_pet = selected_client.pets.select { |pet| pet.name == pet_up4_adoption}
+				shelter.animals << selected_pet
+			when "no"
+				message += 'select [4] to add the client'	
+				# choices('4') #why doesn't this work!! NOW THE CODE simply starts over
+			end
 
-		else 
-			message += "please select one of the options..."
+			else 
+				message += "please select one of the options..."
 
 		end
 		choice = menu(message)
