@@ -1,6 +1,7 @@
 require './shelter'
 require './animal'
 require './client'
+require 'pry'
 
 shelter = Shelter.new("HappiTails")
 
@@ -52,11 +53,33 @@ while choice != 'q'
 		print "number of kids: "; num_kids = gets.chomp
 		print "number of pets: "; num_pets = gets.chomp
 		shelter.clients << Client.new( name, age, num_kids, num_pets)
-		message += "Animal #{name} has been added to #{shelter}"
+		message += "Client #{name} has been added to #{shelter.name} shelter's database"
 
 	when '5'
 		print "We have the following pets up for adoptions: "
-		puts shelter.animals.select.map { |pet| pet.name  }
+		shelter.animals.each { |pet| puts pet.name + " "  }
+		print "Which one would you like do adopt? > "
+		clients_choice = gets.chomp
+		clients_pet = shelter.animals.select { |pet| 
+					pet.name == clients_choice }.first
+
+		print "Are you already a client? [yes] [no] > "
+		is_client = gets.chomp
+			case is_client
+			when "yes"
+				print "What's your name? > "
+				client_name = gets.chomp
+				current_client = shelter.clients.select { |person| 
+					person.name == client_name }.first
+				current_client.pets << clients_pet
+				
+			when "no"
+				choice = 4
+				# selected the added client to add the animal to
+			end
+
+		shelter.animals.select { |pet| pet.name == clients_choice }.first
+
 
 	when '6'
 
