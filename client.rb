@@ -1,6 +1,6 @@
 class Client
   
-  attr_accessor :name, :age, :num_kids, :num_pets
+  attr_accessor :name, :age, :num_kids, :num_pets, :pets
 
   # initialize instance variables
   def initialize( name, age, num_kids, num_pets)
@@ -8,6 +8,7 @@ class Client
   	@age = age
   	@num_kids = num_kids
   	@num_pets = num_pets
+  	@pets = []
 
   end
   
@@ -19,5 +20,5 @@ class Client
 
   end
 
-  
+
 end
