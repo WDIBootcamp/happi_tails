@@ -49,13 +49,27 @@ def choices (choice)
 
 		when '4'
 			message = 'Adding client...'
-			print "name: "; name = gets.chomp
+			print "name: "; client_name = gets.chomp
 			print "age: "; age = gets.chomp
 			print "number of kids: "; num_kids = gets.chomp
 			print "number of pets: "; num_pets = gets.chomp
 			new_client = Client.new( name, age, num_kids, num_pets)
+
+			#adding the existing pets to the client
+			i = 0
+			while num_pets.to_i > i
+				print "pet #{i+1}'s name: "; name = gets.chomp
+				print "#{name}'s age: "; age = gets.chomp
+				print "#{name}'s gender: "; gender = gets.chomp
+				print "#{name}'s species: "; species = gets.chomp
+				print "#{name}'s toys: "; toys = gets.chomp
+				new_client.pets << Animal.new( name, age, gender, species, toys)
+				i+=1
+
+			end
+
 			shelter.clients << new_client
-			message = "[ +1 ] Client #{name} has been added to #{shelter.name} shelter's database"
+			message = "[ +1 ] Client #{client_name} has been added to #{shelter.name} shelter's database"
 
 		when '5'
 			message = 'Adoptng...'
@@ -100,7 +114,13 @@ def choices (choice)
 			when "yes"
 				print "What's your name? > "
 				client_name = gets.chomp 
-				print "\nWhat pet do you want to adopt? > "
+				puts "\nYou have the following pets: "
+				#selecting the client and selecting the pets he owns
+				current_client = shelter.clients.select { |person| 
+						person.name == client_name }.first
+				cutten_client.pets 
+
+				print "\nWhat pet do you want to put up for adopt? > "
 				pet_up4_adoption = gets.chomp
 				selected_client = shelter.clients.select { |client| 
 					client.name == client_name }.first

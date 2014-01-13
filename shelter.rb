@@ -13,18 +13,15 @@ class Shelter
   def clients_details
 	 @clients.inject("") do |clients_list, client|
  		clients_pet_names = client.pets.inject("") { |pet_str, pet_name| 
- 			pet_str << "#{pet_name.name} " }
-
- 		if clients_pet_names == " "
- 			client_pet_name = "0 pets"
- 		end
-      	clients_list << "> #{client.name}: #{clients_pet_names} \n " 
-	  end    
+ 			pet_str << "#{pet_name.name}      " }
+    clients_list << "> #{client.name}: #{clients_pet_names}\n" 
+	  end 
+    clients_list || "0 pets"   
   end
   
   def animals_details
   	@animals.inject("") do |animal_list, animal|
-		animal_list << "> #{animal.name}: #{animal.species}: #{animal.age} years: #{animal.gender}\n"
+		animal_list << "> #{animal.name}: #{animal.species}: #{animal.age} years-old: #{animal.gender}\n"
 	end	
   end
 

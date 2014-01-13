@@ -3,7 +3,7 @@ class Client
   attr_accessor :name, :age, :num_kids, :num_pets, :pets
 
   # initialize instance variables
-  def initialize( name, age, num_kids, num_pets)
+  def initialize( name, age, num_kids, pets)
   	@name = name
   	@age = age
   	@num_kids = num_kids
@@ -20,7 +20,12 @@ class Client
 
   end
 
-  
-
+  def has_pets?
+    if @pets = []
+      return false
+    else
+      return true
+    end
+  end
 
 end
