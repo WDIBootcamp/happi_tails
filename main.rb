@@ -66,7 +66,7 @@ def choices (choice)
 				new_client.pets << Animal.new( name, age, gender, species, toys)
 				i+=1
 
-			end
+			end	
 
 			shelter.clients << new_client
 			message = "[ +1 ] Client #{client_name} has been added to #{shelter.name} shelter's database"
@@ -80,28 +80,32 @@ def choices (choice)
 				print "What's your name? \n > "
 				client_name = gets.chomp 
 
-				print "We have the following pets up for adoptions:\n"
-				puts shelter.animals_details
-				print "Which one would you like do adopt? > "
-				clients_choice = gets.chomp
-
-				clients_pet = shelter.animals.select { |pet| 
-							pet.name == clients_choice }.first
-
-				current_client = shelter.clients.select { |person| 
-					person.name == client_name }.first
-
-				# adding the chosen pet object to the client's pets array
-				current_client.pets << clients_pet
-
-				# removing animal from shelter
-				shelter.animals.delete(clients_pet)
-
-				message = "#{clients_choice} was adopted by #{client_name}!"
-
 			when "no"
-				message += 'select [4] to add the client'			
+				print "Client's' name: "; client_name = gets.chomp
+				print "#{client_name}'s age: "; age = gets.chomp
+				print "#{client_name}'s number of kids: "; gender = gets.chomp
+				print "#{client_name}'s number of pets: "; species = gets.chomp
+				shelter.clients << Client.new( client_name, age, num_kids, num_pets)
 			end
+
+			print "We have the following pets up for adoptions:\n"
+			puts shelter.animals_details
+			print "Which one would you like do adopt? > "
+			clients_choice = gets.chomp
+
+			clients_pet = shelter.animals.select { |pet| 
+						pet.name == clients_choice }.first
+
+			current_client = shelter.clients.select { |person| 
+				person.name == client_name }.first
+
+			# adding the chosen pet object to the client's pets array
+			current_client.pets << clients_pet
+
+			# removing animal from shelter
+			shelter.animals.delete(clients_pet)
+
+			message = "#{clients_choice} was adopted by #{client_name}!"
 
 		when '6'
 			print "Are you already a client? [yes] [no] >  "
@@ -111,34 +115,39 @@ def choices (choice)
 			when "yes"
 				print "What's your name? > "
 				client_name = gets.chomp 
-				print "You have the following pets: "
-
-				#selecting the client and selecting the pets he owns
-				current_client = shelter.clients.select { |person| 
-						person.name == client_name }.first
-
-				# client_pet_name = current_client.pets.map{ |pet| 
-				# 		pet.name }
-				# print client_pet_name + "    "
-
-				client_pets = current_client.pets.select.map { |pet| pet.name }.join(", ")
-				print client_pets
-
-				print "\nWhat pet do you want to put up for adopt? > "
-				pet_4_adopt = gets.chomp
-
-				selected_pet = current_client.pets.select { |pet| pet.name == pet_4_adopt }.first
-				shelter.animals << selected_pet
-
-				# remove animal from client
-				current_client.pets.delete(selected_pet)
-
-				message = "#{selected_pet.name} is now up for adoption."
 
 			when "no"
-				message = 'select [4] to add the client'	
 				# choices('4') #why doesn't this work!! NOW THE CODE simply starts over
+				print "Client's' name: "; client_name = gets.chomp
+				print "#{client_name}'s age: "; age = gets.chomp
+				print "#{client_name}'s number of kids: "; gender = gets.chomp
+				print "#{client_name}'s number of pets: "; species = gets.chomp
+				shelter.clients << Client.new( name, age, num_kids, num_pets)
 			end
+
+			print "You have the following pets: "
+
+			#selecting the client and selecting the pets he owns
+			current_client = shelter.clients.select { |person| 
+					person.name == client_name }.first
+
+			# client_pet_name = current_client.pets.map{ |pet| 
+			# 		pet.name }
+			# print client_pet_name + "    "
+
+			client_pets = current_client.pets.select.map { |pet| pet.name }.join(", ")
+			print client_pets
+
+			print "\nWhat pet do you want to put up for adopt? > "
+			pet_4_adopt = gets.chomp
+
+			selected_pet = current_client.pets.select { |pet| pet.name == pet_4_adopt }.first
+			shelter.animals << selected_pet
+
+			# remove animal from client
+			current_client.pets.delete(selected_pet)
+
+			message = "#{selected_pet.name} is now up for adoption."
 
 		else 
 			message = "please select one of the options..."

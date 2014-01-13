@@ -12,20 +12,5 @@ class Client
 
   end
   
-  def adopt
-
-  end
-
-  def put_up_for_adoption (animal)
-
-  end
-
-  def has_pets?
-    if @pets == []
-      return false
-    else
-      return true
-    end
-  end
 
 end
