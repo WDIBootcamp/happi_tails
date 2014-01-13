@@ -13,13 +13,13 @@ class Shelter
   def clients_details
 	 @clients.inject("") do |clients_list, client|
  		clients_pet_names = client.pets.inject("") { |pet_str, pet_name| 
- 			pet_str == "#{pet_name.name}, " }
- 		if clients_pet_names == ""
+ 			pet_str << "#{pet_name.name} " }
+
+ 		if clients_pet_names == " "
  			client_pet_name = "0 pets"
  		end
- 		binding.pry
       	clients_list << "> #{client.name}: #{clients_pet_names} \n " 
-	  end
+	  end    
   end
   
   def animals_details
