@@ -35,7 +35,7 @@ def choices (choice)
 			message += "#{shelter.animals_details}\n"
 		when '2'
 			message = "The current clients of this shelter are: \n"
-			message += "#{shelter.clients_details}\n"
+			message += "#{shelter.clients_details}"
 
 		when '3'
 			message = 'Adding animal...'
@@ -72,77 +72,76 @@ def choices (choice)
 			message = "[ +1 ] Client #{client_name} has been added to #{shelter.name} shelter's database"
 
 		when '5'
-			message = 'Adopting...'
-			print "We have the following pets up for adoptions:\n"
-			puts shelter.animals_details
-			print "Which one would you like do adopt? > "
-			clients_choice = gets.chomp
-			clients_pet = shelter.animals.select { |pet| 
-						pet.name == clients_choice }.first
+			print "Are you already a client? [yes] [no] >  "
+			is_client = gets.chomp
 
-			# catch(:redo) do
-				print "Are you already a client? [yes] [no] >  "
-				is_client = gets.chomp
-				case is_client
-				when "yes"
-					print "What's your name? \n > "
-					client_name = gets.chomp 
-					current_client = shelter.clients.select { |person| 
-						person.name == client_name }.first
-					current_client.pets << clients_pet
-					# how remove pet from shelter
-					# if shelter.animals.select.map { |pet| 
-						#pet.name == clients_choice } 
-					#
-					# 
+			case is_client
+			when "yes"
+				print "What's your name? \n > "
+				client_name = gets.chomp 
+
+				print "We have the following pets up for adoptions:\n"
+				puts shelter.animals_details
+				print "Which one would you like do adopt? > "
+				clients_choice = gets.chomp
+
+				clients_pet = shelter.animals.select { |pet| 
+							pet.name == clients_choice }.first
+
+				current_client = shelter.clients.select { |person| 
+					person.name == client_name }.first
+
+				# adding the chosen pet object to the client's pets array
+				current_client.pets << clients_pet
+
+				# removing animal from shelter
+				shelter.animals.delete(clients_pet)
+
 				message = "#{clients_choice} was adopted by #{client_name}!"
 
-				when "no"
-					message += 'select [4] to add the client'	
-					# choices('4') 
-					#why doesn't this work!! NOW THE CODE simply starts over
-					
-					# redo 
-					# how to run what comes after this method call
-				 #    current_client = shelter.clients.select { |person| 
-					# 	person.name == name }.first
-					# current_client.pets << clients_pet
-
-					
-				end
+			when "no"
+				message += 'select [4] to add the client'			
+			end
 
 		when '6'
-			message = 'Putting for adoption...'
 			print "Are you already a client? [yes] [no] >  "
-			is_client = print gets.chomp
+			is_client =  gets.chomp
 
 			case is_client
 			when "yes"
 				print "What's your name? > "
 				client_name = gets.chomp 
-				print "\nYou have the following pets: "
+				print "You have the following pets: "
 
 				#selecting the client and selecting the pets he owns
 				current_client = shelter.clients.select { |person| 
 						person.name == client_name }.first
-				client_pet_name = current_client.pets.map{ |pet| 
-						pet.name }
-				print client_pet_name + "    "
+
+				# client_pet_name = current_client.pets.map{ |pet| 
+				# 		pet.name }
+				# print client_pet_name + "    "
+
+				client_pets = current_client.pets.select.map { |pet| pet.name }.join(", ")
+				print client_pets
 
 				print "\nWhat pet do you want to put up for adopt? > "
-				pet_up4_adoption = gets.chomp
-				selected_client = shelter.clients.select { |client| 
-					client.name == client_name }.first
-				selected_pet = selected_client.pets.select { |pet| pet.name == pet_up4_adoption}
+				pet_4_adopt = gets.chomp
+
+				selected_pet = current_client.pets.select { |pet| pet.name == pet_4_adopt }.first
 				shelter.animals << selected_pet
+
+				# remove animal from client
+				current_client.pets.delete(selected_pet)
+
+				message = "#{selected_pet.name} is now up for adoption."
 
 			when "no"
 				message = 'select [4] to add the client'	
 				# choices('4') #why doesn't this work!! NOW THE CODE simply starts over
 			end
 
-			else 
-				message = "please select one of the options..."
+		else 
+			message = "please select one of the options..."
 
 		end
 		choice = menu(message)

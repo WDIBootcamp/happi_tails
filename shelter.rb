@@ -22,6 +22,7 @@ class Shelter
       end
       clients_string << "> #{client_name}: #{client_pets}\n"
       i+=1
+
     end
 
     return clients_string     
@@ -31,7 +32,8 @@ class Shelter
   def animals_details
   	@animals.inject("") do |animal_list, animal|
 		animal_list << "> #{animal.name}: #{animal.species}: #{animal.age} years-old: #{animal.gender}\n"
-	end	
+	  end	
+    
   end
 
 
