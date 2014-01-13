@@ -11,12 +11,21 @@ class Shelter
   end
 
   def clients_details
-	 @clients.inject("") do |clients_list, client|
- 		clients_pet_names = client.pets.inject("") { |pet_str, pet_name| 
- 			pet_str << "#{pet_name.name}      " }
-    clients_list << "> #{client.name}: #{clients_pet_names}\n" 
-	  end 
-    clients_list || "0 pets"   
+    i=0
+    clients_string = ""
+
+    while i < @clients.length
+      client_name = @clients[i].name
+      client_pets = @clients[i].pets.select.map { |pet| pet.name }.join(", ")
+      if client_pets == ""
+        client_pets = "no pets"
+      end
+      clients_string << "> #{client_name}: #{client_pets}\n"
+      i+=1
+    end
+
+    return clients_string     
+
   end
   
   def animals_details

@@ -53,7 +53,7 @@ def choices (choice)
 			print "age: "; age = gets.chomp
 			print "number of kids: "; num_kids = gets.chomp
 			print "number of pets: "; num_pets = gets.chomp
-			new_client = Client.new( name, age, num_kids, num_pets)
+			new_client = Client.new( client_name, age, num_kids, num_pets)
 
 			#adding the existing pets to the client
 			i = 0
@@ -72,7 +72,7 @@ def choices (choice)
 			message = "[ +1 ] Client #{client_name} has been added to #{shelter.name} shelter's database"
 
 		when '5'
-			message = 'Adoptng...'
+			message = 'Adopting...'
 			print "We have the following pets up for adoptions:\n"
 			puts shelter.animals_details
 			print "Which one would you like do adopt? > "
@@ -90,6 +90,11 @@ def choices (choice)
 					current_client = shelter.clients.select { |person| 
 						person.name == client_name }.first
 					current_client.pets << clients_pet
+					# how remove pet from shelter
+					# if shelter.animals.select.map { |pet| 
+						#pet.name == clients_choice } 
+					#
+					# 
 				message = "#{clients_choice} was adopted by #{client_name}!"
 
 				when "no"
@@ -110,15 +115,19 @@ def choices (choice)
 			message = 'Putting for adoption...'
 			print "Are you already a client? [yes] [no] >  "
 			is_client = print gets.chomp
+
 			case is_client
 			when "yes"
 				print "What's your name? > "
 				client_name = gets.chomp 
-				puts "\nYou have the following pets: "
+				print "\nYou have the following pets: "
+
 				#selecting the client and selecting the pets he owns
 				current_client = shelter.clients.select { |person| 
 						person.name == client_name }.first
-				cutten_client.pets 
+				client_pet_name = current_client.pets.map{ |pet| 
+						pet.name }
+				print client_pet_name + "    "
 
 				print "\nWhat pet do you want to put up for adopt? > "
 				pet_up4_adoption = gets.chomp
@@ -126,6 +135,7 @@ def choices (choice)
 					client.name == client_name }.first
 				selected_pet = selected_client.pets.select { |pet| pet.name == pet_up4_adoption}
 				shelter.animals << selected_pet
+
 			when "no"
 				message = 'select [4] to add the client'	
 				# choices('4') #why doesn't this work!! NOW THE CODE simply starts over

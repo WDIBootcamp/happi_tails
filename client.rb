@@ -21,7 +21,7 @@ class Client
   end
 
   def has_pets?
-    if @pets = []
+    if @pets == []
       return false
     else
       return true
